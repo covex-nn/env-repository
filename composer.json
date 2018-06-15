@@ -1,0 +1,36 @@
+{
+    "name": "covex-nn/environment-repository",
+    "type": "library",
+    "descrition": "",
+    "keywords": [
+        "configurator"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey F. Mindubaev",
+            "email": "covex.mobile@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+    },
+    "provide": {
+        "environment-repository": "^1.0"
+    },
+    "require-dev": {
+        "covex-nn/environment": "^0.5"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        },
+        "environment-repository": "repository"
+    }
+}
