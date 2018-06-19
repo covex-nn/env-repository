@@ -9,7 +9,9 @@ sequence:
             "docker-compose.yml": "docker-compose.yml"
             "docker/nginx/backend_dev.conf": "docker/nginx/backend_dev.conf"
             "docker/nginx/default.conf": "docker/nginx/default.conf"
-            "docker/php/xdebug.ini": "docker/php/xdebug.ini"
+            "docker/php/fpm/conf.d/99-overrides.ini": "docker/php/fpm/conf.d/99-overrides.ini"
+            "docker/php/fpm/conf.d/99-xdebug.ini": "docker/php/fpm/conf.d/99-xdebug.ini"
+            "docker/php/fpm/pool.d/www.conf": "docker/php/fpm/pool.d/www.conf"
             "Dockerfile": "Dockerfile"
             "Dockerfile-nginx": "Dockerfile-nginx"
         replace:
