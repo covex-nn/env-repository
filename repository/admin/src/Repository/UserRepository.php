@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * User Repository
+ * User Repository.
  */
 class UserRepository extends ServiceEntityRepository
 {

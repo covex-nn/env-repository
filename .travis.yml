@@ -1,0 +1,61 @@
+language: php
+
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+env:
+    global:
+        - TRAVIS_SCRIPT="composer"
+
+matrix:
+    fast_finish: true
+    include:
+        - php: 7.2
+          env: TRAVIS_SCRIPT="lint"
+        - php: 7.1
+          env: SEQUENCE="templating"
+        - php: 7.1
+          env: SEQUENCE="admin"
+        - php: 7.1
+          env: SEQUENCE="docker-compose"
+        - php: 7.1
+          env: SEQUENCE="docker-ci"
+
+install:
+    - if [[ $TRAVIS_SCRIPT == 'lint' ]]; then
+          mkdir --parents "${HOME}/bin";
+          wget "http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar" --output-document="${HOME}/bin/php-cs-fixer";
+          chmod u+x "${HOME}/bin/php-cs-fixer";
+      fi
+    - if [[ $TRAVIS_SCRIPT == 'composer' ]]; then
+          composer global require covex-nn/environment;
+          sed -i -e 's/covex-nn\/environment-repository/environment-repository/g' composer.json;
+          composer config version 1.0.0;
+          composer config -g repositories.travis path $TRAVIS_BUILD_DIR;
+          composer global require environment-repository;
+          composer create-project symfony/skeleton build;
+      fi
+
+script:
+    - if [[ $TRAVIS_SCRIPT == 'lint' ]]; then
+          php-cs-fixer fix --diff --dry-run -v;
+      fi
+    - if [[ $TRAVIS_SCRIPT == 'composer' ]]; then
+          cd build;
+          composer config extra.symfony.allow-contrib true;
+          composer env:apply $SEQUENCE;
+      fi
+
+after_script:
+    - if [[ $TRAVIS_SCRIPT == 'composer' ]]; then
+          cat ../repository/$SEQUENCE/manifest.yaml;
+      fi
+    - if [[ $TRAVIS_SCRIPT == 'composer' ]]; then
+          cat composer.json;
+      fi
+    - if [[ $TRAVIS_SCRIPT == 'composer' ]]; then
+          ls -la;
+      fi
